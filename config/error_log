@@ -1,0 +1,8 @@
+[21-Apr-2026 07:41:26 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/riyavmlb/sale.alkabaagrovet.com/config/database.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/riyavmlb/sale.alkabaagrovet.com/config/database.php on line 19
+[21-Apr-2026 07:41:26 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/riyavmlb/sale.alkabaagrovet.com/config/mail.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/riyavmlb/sale.alkabaagrovet.com/config/mail.php on line 17

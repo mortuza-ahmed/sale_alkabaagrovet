@@ -69,7 +69,12 @@ class CustomerController extends Controller
             ->get();
         return response()->json($sales);
     }
-
+    public function release_payment_delete($id)
+    {
+        $payment = PaymentTransaction::findOrFail($id);
+        $payment->delete();
+        return back()->with('message', 'Payment deleted successfully.');
+    }
     /**
      * Remove the specified resource from storage.
      */

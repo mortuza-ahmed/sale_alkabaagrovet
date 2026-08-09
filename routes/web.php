@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::get('dashboard', [DashboardController::class,'dashboard'])->name('dashboard');
     Route::resource('customers', CustomerController::class);
     Route::get('customers/{id}/payment', [CustomerController::class,'customer_payment'])->name('customers.payment');
+    Route::post('customers/payment/{id}/delete', [CustomerController::class,'release_payment_delete'])->name('customers.releasePaymentDelete');
     Route::post('customers/payment/release', [CustomerController::class,'release_payment'])->name('customers.releasePayment');
     Route::post('customers/payment/release/update', [CustomerController::class,'release_payment_update'])->name('customers.releasePaymentUpdate');
     Route::match(['get','post'],'customers-payment-reports', [CustomerController::class,'payment_reports'])->name('customers.paymentReports');

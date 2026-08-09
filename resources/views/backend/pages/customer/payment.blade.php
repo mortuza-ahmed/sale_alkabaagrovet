@@ -182,11 +182,18 @@
                                             <div class="" style="position: absolute; top:0px; right:0px;">
                                                 <a href="javascript:;" class="btn btn-sm btn-info waves-effect waves-light"
                                                     data-bs-toggle="modal"
-                                                    data-bs-target="#paymentEditModal{{ $payment->id }}"><i
-                                                        class="fas fa-edit"></i>
-                                                    Edit</a>
+                                                    data-bs-target="#paymentEditModal{{ $payment->id }}"><i class="fas fa-edit"></i> Edit
+                                                </a>
+
+                                                <form action="{{ route('customers.releasePaymentDelete', $payment->id) }}" method="POST" style="display:inline;"
+                                                    onsubmit="return confirm('Are you sure you want to delete this payment?');">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-sm btn-danger waves-effect waves-light">
+                                                        <i class="fas fa-trash"></i> Delete
+                                                    </button>
+                                                </form>
                                             </div>
-                                            <div class="row">
+                                            <div class="row mt-3">
                                                 <div class="col-md-6">
                                                     <strong>Payment #{{ $payment->id }}</strong>
                                                 </div>
@@ -196,7 +203,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="row">
+                                            <div class="row mt-3">
                                                 <div class="col-md-6">
                                                     <strong>Paid:</strong>
                                                     {{ number_format($payment->paid) }}

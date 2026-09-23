@@ -66,6 +66,13 @@
 
                                 <!-- Sale Items -->
                                 <div class="sale_wrapper my-4">
+                                    <div class="row d-flex justify-content-end">
+                                        <div class="col-2 col-md-2 col-lg-1 p-1">
+                                            <button type="button" class="btn btn-sm btn-success w-100 add-item">
+                                                <i class="fas fa-plus"></i> Add Item
+                                            </button>
+                                        </div>
+                                    </div>
                                     @foreach($sale->items as $index => $item)
                                         <div class="row mb-2 align-items-end sale_item_row">
                                             <div class="col-6 col-md-4 col-lg-3 p-1">
@@ -109,7 +116,7 @@
                                                 <input type="number" class="form-control form-control-sm" name="bonus_facility[]" value="{{ $item->bonus_facility }}" placeholder="Facility">
                                             </div>
                                             <div class="col-12 col-md-3 col-lg-1 p-1">
-                                                @if($index == 0)
+                                                {{-- @if($index == 0)
                                                     <button type="button" class="btn btn-sm btn-success w-100 add-item">
                                                         <i class="fas fa-plus"></i>
                                                     </button>
@@ -117,7 +124,10 @@
                                                     <button type="button" class="btn btn-sm btn-danger w-100 remove-item">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
-                                                @endif
+                                                @endif --}}
+                                                <button type="button" class="btn btn-sm btn-danger w-100 remove-item">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
                                             </div>
                                         </div>
                                     @endforeach

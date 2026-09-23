@@ -46,15 +46,15 @@
                                                             <td>{{ Carbon\Carbon::parse($sale->order_date)->format('d M Y') ?? '' }}</td>
                                                             <td>{{ Carbon\Carbon::parse($sale->delivery_date)->format('d M Y') ?? '' }}</td>
                                                             <td>{{ Carbon\Carbon::parse($sale->date)->format('d M Y') ?? '' }}</td>
-                                                            <td>{{ $sale->total ?? '' }}</td>
-                                                            <td>
+                                                            <td class="text-start">{{ $sale->total ?? '' }}</td>
+                                                            <td class="text-start">
                                                                 @if($sale->discount_type == 'fixed')
                                                                     {{ number_format($sale->discount_amount, 2) }}
                                                                 @elseif($sale->discount_type == 'percentage')
                                                                     {{ rtrim(rtrim($sale->discount_value, '0'), '.') }}% ({{ number_format($sale->discount_amount, 2) }})
                                                                 @endif
                                                             </td>
-                                                            <td>{{ $sale->grand_total ?? '' }}</td>
+                                                            <td class="text-start">{{ number_format($sale->grand_total) ?? '' }}</td>
                                                             <td class="d-flex justify-content-center align-items-center gap-2">
                                                                 <a href="{{ route('sales.print', $sale->id) }}" class="btn btn-sm btn-secondary waves-effect waves-light d-flex justify-content-center align-items-center gap-1"><i class="fas fa-print"></i> Print</a>
                                                                 <a href="{{ route('sales.show', $sale->id) }}" class="btn btn-sm btn-info waves-effect waves-light d-flex justify-content-center align-items-center gap-1"><i class="fas fa-eye"></i> View</a>
@@ -74,6 +74,15 @@
                                                         </tr>
                                                         @endforeach
                                                     </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th colspan="7" class="text-end">Grand Total:</th>
+                                                            <th class="text-start">{{ number_format($sales->sum('total')) }}</th>
+                                                            <th class="text-start">{{ number_format($sales->sum('discount_amount')) }}</th>
+                                                            <th class="text-start">{{ number_format($sales->sum('grand_total')) }}</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </tfoot>
                                                 </table>
                                             </div>
                                         </div>

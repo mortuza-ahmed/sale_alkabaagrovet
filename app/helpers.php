@@ -15,4 +15,18 @@ function paymentHistoryPaid($customerId){
 function paymentHistoryDue($customerId){
     return paymentHistoryTotal($customerId) - paymentHistoryPaid($customerId);
 }
-
+function customerTotalSale($customerId, $fromDate, $toDate){
+    return Sale::where('customer_id', $customerId)->whereBetween('date', [$fromDate, $toDate])->sum('total');
+}
+function customerTotalSaleDiscounted($customerId, $fromDate, $toDate){
+    return Sale::where('customer_id', $customerId)->whereBetween('date', [$fromDate, $toDate])->sum('discount_amount');
+}
+function customerGrandTotalSale($customerId, $fromDate, $toDate){
+    return Sale::where('customer_id', $customerId)->whereBetween('date', [$fromDate, $toDate])->sum('grand_total');
+}
+function customerTotalCollection($customerId, $fromDate, $toDate){
+    return PaymentTransaction::where('customer_id', $customerId)->whereBetween('payment_date', [$fromDate, $toDate])->sum('paid');
+}
+function customerTotalDue($customerId, $fromDate, $toDate){
+    return customerGrandTotalSale($customerId, $fromDate, $toDate) - customerTotalCollection($customerId, $fromDate, $toDate);
+}

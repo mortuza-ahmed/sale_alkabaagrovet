@@ -90,7 +90,6 @@
                                 </div>
 
                                 <!-- Summary Cards Section -->
-
                                 @if (isset($payments) && count($payments) > 0)
                                     @php
                                         $cus = $payments->first();
@@ -120,21 +119,21 @@
                                                                     <td class="fw-bold">{{ $cus->customer?->phone }}</td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td class="fw-bold pe-2">Total Sales</td>
+                                                                    <td class="fw-bold pe-2">Overall Total Sales</td>
                                                                     <td>:</td>
                                                                     <td class="fw-bold">৳
                                                                         {{ number_format(paymentHistoryTotal($cus->customer?->id), 2) }}
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td class="fw-bold pe-2">Total Paid</td>
+                                                                    <td class="fw-bold pe-2">Overall Total Paid</td>
                                                                     <td>:</td>
                                                                     <td class="fw-bold">৳
                                                                         {{ number_format(paymentHistoryPaid($cus->customer?->id), 2) }}
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td class="fw-bold pe-2">Total Due</td>
+                                                                    <td class="fw-bold pe-2">Overall Total Due</td>
                                                                     <td>:</td>
                                                                     <td class="fw-bold">৳
                                                                         {{ number_format(paymentHistoryDue($cus->customer?->id), 2) }}
@@ -148,9 +147,59 @@
                                         </div>
                                     </div>
 
+                                    <div class="row my-4">
+                                        <div class="col-12">
+                                            <div style="width: 100%; overflow-x: auto;">
+                                                <table class="table table-sm table-striped table-bordered"
+                                                    style="border-collapse: collapse; border-spacing: 0;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>SL</th>
+                                                            <th>Invoice Date</th>
+                                                            <th>Invoice No</th>
+                                                            <th>Order Date</th>
+                                                            <th>Delivery Date</th>
+                                                            <th>Grand Total</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @php
+                                                            $totalSales = 0;
+                                                        @endphp
+
+                                                        @forelse ($sales as $sale)
+                                                            @php
+                                                                $totalSales += ($sale->grand_total ?? 0);
+                                                            @endphp
+                                                            <tr>
+                                                                <td>{{ $loop->iteration }}</td>
+                                                                <td>{{ $sale->date ? Carbon\Carbon::parse($sale->date)->format('d M Y') : '-' }}</td>
+                                                                <td>#{{ $sale->id }}</td>
+                                                                <td>{{ $sale->order_date ? Carbon\Carbon::parse($sale->order_date)->format('d M Y') : '-' }}</td>
+                                                                <td>{{ $sale->delivery_date ? Carbon\Carbon::parse($sale->delivery_date)->format('d M Y') : '-' }}</td>
+                                                                <td class="text-end">৳ {{ number_format($sale->grand_total ?? 0, 2) }}</td>
+                                                            </tr>
+                                                        @empty
+                                                            <tr>
+                                                                <td colspan="6" class="text-center text-muted">No sales found for this customer in the selected date range.</td>
+                                                            </tr>
+                                                        @endforelse
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th colspan="5" class="text-end">Grand Total:</th>
+                                                            <th>{{ number_format($totalSales, 2) }}</th>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
                                     <!-- Table -->
                                     <div style="width: 100%; overflow-x: auto;">
-                                        <table id="datatable" class="table table-sm table-striped table-bordered"
+                                        <table class="table table-sm table-striped table-bordered"
                                             style="border-collapse: collapse; border-spacing: 0;">
                                             <thead>
                                                 <tr>

@@ -122,6 +122,9 @@ class SaleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!isset($request->product_id) && !$request->filled('product_id')){
+            return redirect()->back()->with('error','At last one item needed');
+        }
         $sale = Sale::findOrFail($id);
         // Restore stock for existing items first
         foreach ($sale->items as $oldItem) {

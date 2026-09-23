@@ -26,7 +26,6 @@
                         <div class="card-body">
 
                             <!-- Date Filter Form -->
-                            <!-- Date Filter Form -->
                             <div class="row mb-3 d-flex justify-content-center">
                                 <!-- Selected Range Info -->
 
@@ -57,11 +56,11 @@
                                 </div>
                             </div>
 
-
-
                             <!-- Table -->
                             @php
-                                $grandTotal = $sales->sum('total');
+                                $grandTotalAmount = $sales->sum('total');
+                                $grandTotalDiscount = $sales->sum('discount_amount');
+                                $grandTotal = $sales->sum('grand_total');
                             @endphp
                             <div style="width: 100%; overflow-x: auto;">
                                 <table id="datatable" class="table table-sm table-striped table-bordered" style="border-collapse: collapse; border-spacing: 0;">
@@ -98,7 +97,7 @@
                                                     {{ rtrim(rtrim($sale->discount_value, '0'), '.') }}% ({{ number_format($sale->discount_amount, 2) }})
                                                 @endif
                                             </td>
-                                            <td>{{ $sale->grand_total ?? '' }}</td>
+                                            <td>{{ number_format($sale->grand_total) ?? '' }}</td>
                                             <td class="d-flex justify-content-center align-items-center gap-2">
                                                 <a href="{{ route('sales.print', $sale->id) }}" class="btn btn-sm btn-secondary d-flex justify-content-center align-items-center gap-1"><i class="fas fa-print"></i> Print</a>
                                                 <a href="{{ route('sales.show', $sale->id) }}" class="btn btn-sm btn-info d-flex justify-content-center align-items-center gap-1"><i class="fas fa-eye"></i> View</a>
@@ -117,7 +116,10 @@
                                     <tfoot>
                                         <tr>
                                             <th colspan="7" class="text-end">Grand Total:</th>
+                                            <th>{{ number_format($grandTotalAmount) }}</th>
+                                            <th>{{ number_format($grandTotalDiscount) }}</th>
                                             <th>{{ number_format($grandTotal) }}</th>
+                                            <th></th>
                                         </tr>
                                     </tfoot>
                                 </table>

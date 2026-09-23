@@ -69,20 +69,20 @@
                                 <div class="d-flex justify-content-start">
                                     <table class="table table-borderless table-sm w-auto mb-0">
                                         <tr>
-                                            <td class="fw-bold pe-2">Total Sales</td>
+                                            <td class="fw-bold pe-2">Overall Total Sales</td>
                                             <td>:</td>
                                             <td class="fw-bold">
                                                 ৳{{ number_format(paymentHistoryTotal($cus->customer?->id, $fromDate, $toDate), 2) }}</td>
                                         </tr>
                                         <tr>
-                                            <td class="fw-bold pe-2">Total Paid</td>
+                                            <td class="fw-bold pe-2">Overall Total Paid</td>
                                             <td>:</td>
                                             <td class="fw-bold">
                                                 ৳{{ number_format(paymentHistoryPaid($cus->customer?->id, $fromDate, $toDate), 2) }}
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="fw-bold pe-2">Total Due</td>
+                                            <td class="fw-bold pe-2">Overall Total Due</td>
                                             <td>:</td>
                                             <td class="fw-bold">
                                                 ৳{{ number_format(paymentHistoryDue($cus->customer?->id, $fromDate, $toDate), 2) }}
@@ -92,6 +92,44 @@
                                 </div>
                             </td>
                         </tr>
+                    </table>
+
+                    {{-- sales table --}}
+                     <table class="table table-bordered my-2" style="border:1px solid #ADADAD">
+                        <thead class="table-secondary p-0">
+                            <tr class="p-0">
+                                <th class="p-1">SL</th>
+                                <th class="p-1">Invoice Date</th>
+                                <th class="p-1">Invoice No</th>
+                                <th class="p-1">Order Date</th>
+                                <th class="p-1">Delivery Date</th>
+                                <th class="p-1">Grand Total</th>
+                            </tr>
+                        </thead>
+                        <tbody class="p-0">
+                            @php
+                                $totalSales = 0;
+                            @endphp
+                            @foreach ($sales as $sale)
+                            @php
+                                $totalSales = $totalSales + $sale->grand_total;
+                            @endphp
+                                <tr>
+                                    <td style="padding: 0px 2px;">{{ $loop->iteration }}</td>
+                                    <td style="padding: 0px 2px;">{{ Carbon\Carbon::parse($sale->date)->format('d M Y') ?? '' }}</td>
+                                    <td style="padding: 0px 2px;"># {{ $sale->id ?? '' }}</td>
+                                    <td style="padding: 0px 2px;">{{ Carbon\Carbon::parse($sale->order_date)->format('d M Y') ?? '' }}</td>
+                                    <td style="padding: 0px 2px;">{{ Carbon\Carbon::parse($sale->delivery_date)->format('d M Y') ?? '' }}</td>
+                                    <td style="padding: 0px 2px;">{{ number_format($sale->grand_total, 2) ?? '' }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                        <tfoot>
+                            <tr class="p-0">
+                                <th style="padding:0px 1px;" colspan="5" class="text-end">Grand Total:</th>
+                                <th style="padding:0px 1px;">{{ number_format($totalSales, 2) }}</th>
+                            </tr>
+                        </tfoot>
                     </table>
 
                     {{-- ITEMS TABLE --}}
@@ -128,9 +166,9 @@
                         </tbody>
                         <tfoot>
                             <tr class="p-0">
-                                <th colspan="3" class="text-end">Total:</th>
-                                <th style="padding:0px 2px;">৳{{ number_format($grandTotal, 2) }}</th>
-                                <th colspan="2"></th>
+                                <th style="padding:0px 1px;" colspan="3" class="text-end">Total:</th>
+                                <th style="padding:0px 1px;">৳{{ number_format($grandTotal, 2) }}</th>
+                                <th style="padding:0px 1px;" colspan="2"></th>
                             </tr>
                         </tfoot>
                     </table>

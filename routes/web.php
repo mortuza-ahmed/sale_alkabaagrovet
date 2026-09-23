@@ -22,6 +22,8 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
     Route::get('dashboard', [DashboardController::class,'dashboard'])->name('dashboard');
     Route::resource('customers', CustomerController::class);
+    Route::match(['get','post'],'customers-sale-collection-reports', [CustomerController::class,'sales_collections_reports'])->name('customers.salesCollectionsreports');
+    Route::get('customers-sale-collection-reports-print', [CustomerController::class, 'sales_collections_reports_print'])->name('customers.salesCollectionsReportsPrint');
     Route::get('customers/{id}/payment', [CustomerController::class,'customer_payment'])->name('customers.payment');
     Route::post('customers/payment/{id}/delete', [CustomerController::class,'release_payment_delete'])->name('customers.releasePaymentDelete');
     Route::post('customers/payment/release', [CustomerController::class,'release_payment'])->name('customers.releasePayment');

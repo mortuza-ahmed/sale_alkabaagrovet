@@ -11,6 +11,12 @@
             border: none !important;
             padding:0px;
         }
+
+        .print-footer-note {
+            text-align: left;
+            font-size: 12px;
+            margin-top: 15px;
+        }
     </style>
 @endpush
 
@@ -193,6 +199,11 @@
                     _____________________ <br>
                     Authorized Signature
                 </div>
+            </div>
+
+            {{-- NOTE (shows once, at the end of the document) --}}
+            <div class="print-footer-note">
+                <strong>বি:দ্র:</strong> ড্যামেজড এবং এক্সপায়ার্ড প্রোডাক্ট ফেরৎযোগ্য নয়।
             </div>
         </div>
 

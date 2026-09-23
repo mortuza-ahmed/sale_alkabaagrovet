@@ -130,18 +130,20 @@ class CustomerController extends Controller
         $toDate = '';
         $customerId = '';
         $payments = [];
+        $sales = [];
 
         if($request->isMethod('post')){
             $fromDate = $request->from_date;
             $toDate = $request->to_date;
             $customerId = $request->customer_id;
+            $sales = Sale::where('customer_id', $customerId)->whereBetween('date', [$fromDate, $toDate])->orderBy('id','asc')->get();
             $query = PaymentTransaction::with('customer')->where(['customer_id'=> $customerId])->orderBy('id','asc');
             if($fromDate && $toDate){
                 $query->whereBetween('payment_date', [$fromDate, $toDate]);
             }
             $payments = $query->get();
         }
-        return view('backend.pages.customer.reports', compact('customers', 'payments', 'fromDate', 'toDate','customerId'));
+        return view('backend.pages.customer.reports', compact('customers', 'payments', 'fromDate', 'toDate','customerId','sales'));
     }
 
     public function payment_reports_print(Request $request)
@@ -149,12 +151,33 @@ class CustomerController extends Controller
         $fromDate = $request->query('from_date') ?? '';
         $toDate = $request->query('to_date') ?? '';
         $customerId = $request->query('customer_id') ?? '';
+        $sales = Sale::where('customer_id', $customerId)->whereBetween('date', [$fromDate, $toDate])->orderBy('id','asc')->get();
 
         $query = PaymentTransaction::with('customer')->where(['customer_id'=> $customerId])->orderBy('id','asc');
         if($fromDate && $toDate){
             $query->whereBetween('payment_date', [$fromDate, $toDate]);
         }
         $payments = $query->get();
-        return view('backend.pages.customer.reports_print', compact('payments', 'fromDate', 'toDate', 'customerId'));
+        return view('backend.pages.customer.reports_print', compact('payments', 'fromDate', 'toDate', 'customerId', 'sales'));
+    }
+    public function sales_collections_reports(Request $request)
+    {
+        $fromDate = '';
+        $toDate = '';
+        $customers = [];
+
+        if($request->isMethod('post')){
+            $fromDate = $request->from_date;
+            $toDate = $request->to_date;
+            $customers = Customer::with('payment_transactions')->latest()->get();
+        }
+        return view('backend.pages.customer.sales_collections_reports', compact('customers', 'fromDate', 'toDate'));
+    }
+    public function sales_collections_reports_print(Request $request)
+    {
+        $fromDate = $request->from_date;
+        $toDate = $request->to_date;
+        $customers = Customer::with('payment_transactions')->latest()->get();
+        return view('backend.pages.customer.sales_collections_reports_print', compact('customers', 'fromDate', 'toDate'));
     }
 }

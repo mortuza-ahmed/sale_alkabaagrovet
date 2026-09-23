@@ -38,7 +38,7 @@
                                                             <td> <a href="{{ route('purchases.show', $purchase->id) }}"># {{ $purchase->id }}</a></td>
                                                             <td>{{ $purchase->supplier?->name }}</td>
                                                             <td>{{ Carbon\Carbon::parse($purchase->purchase_date)->format('d M Y') ?? '' }}</td>
-                                                            <td>{{ number_format($purchase->total_amount) ?? '' }}</td>
+                                                            <td class="text-start">{{ number_format($purchase->total_amount) ?? '' }}</td>
                                                             <td class="d-flex justify-content-center align-items-center gap-2">
                                                                 <a href="{{ route('purchases.print', $purchase->id) }}" class="btn btn-sm btn-secondary waves-effect waves-light d-flex justify-content-center align-items-center gap-1"><i class="fas fa-print"></i> Print</a>
                                                                 <a href="{{ route('purchases.show', $purchase->id) }}" class="btn btn-sm btn-info waves-effect waves-light d-flex justify-content-center align-items-center gap-1"><i class="fas fa-eye"></i> View</a>
@@ -58,6 +58,13 @@
                                                         </tr>
                                                         @endforeach
                                                     </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th colspan="4" class="text-end">Grand Total Amount:</th>
+                                                            <th class="text-start">{{ number_format($purchases->sum('total_amount')) }}</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </tfoot>
                                                 </table>
                                             </div>
                                         </div>

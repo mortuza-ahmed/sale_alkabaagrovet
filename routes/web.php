@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::get('sales-reports', [SaleController::class,'reports'])->name('sales.reports');
     Route::get('sales/{id}/print',[SaleController::class,'print'])->name('sales.print');
     Route::get('stocks', [StockController::class,'index'])->name('stocks.index');
+    Route::get('stocks/print', [StockController::class, 'print'])->name('stocks.print');
     Route::get('stocks/log', [StockController::class,'log'])->name('stocks.log');
     Route::resource('expenses', ExpenseController::class);
     Route::resource('employees', EmployeeController::class);

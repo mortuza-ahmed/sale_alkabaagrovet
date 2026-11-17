@@ -136,7 +136,7 @@ class CustomerController extends Controller
             $fromDate = $request->from_date;
             $toDate = $request->to_date;
             $customerId = $request->customer_id;
-            $sales = Sale::where('customer_id', $customerId)->whereBetween('date', [$fromDate, $toDate])->orderBy('id','asc')->get();
+            $sales = Sale::where('customer_id', $customerId)->orderBy('id','asc')->get();
             $query = PaymentTransaction::with('customer')->where(['customer_id'=> $customerId])->orderBy('id','asc');
             if($fromDate && $toDate){
                 $query->whereBetween('payment_date', [$fromDate, $toDate]);
@@ -151,7 +151,7 @@ class CustomerController extends Controller
         $fromDate = $request->query('from_date') ?? '';
         $toDate = $request->query('to_date') ?? '';
         $customerId = $request->query('customer_id') ?? '';
-        $sales = Sale::where('customer_id', $customerId)->whereBetween('date', [$fromDate, $toDate])->orderBy('id','asc')->get();
+        $sales = Sale::where('customer_id', $customerId)->orderBy('id','asc')->get();
 
         $query = PaymentTransaction::with('customer')->where(['customer_id'=> $customerId])->orderBy('id','asc');
         if($fromDate && $toDate){

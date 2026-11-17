@@ -149,6 +149,7 @@
 
                                     <div class="row my-4">
                                         <div class="col-12">
+                                            <strong class="text-center">All Sales Invoice</strong>
                                             <div style="width: 100%; overflow-x: auto;">
                                                 <table class="table table-sm table-striped table-bordered"
                                                     style="border-collapse: collapse; border-spacing: 0;">
@@ -198,6 +199,8 @@
 
 
                                     <!-- Table -->
+                                    <strong class="text-center">Payment History ({{ Carbon\Carbon::parse($fromDate)->format('d M Y') ?? '' }} - {{ Carbon\Carbon::parse($toDate)->format('d M Y') ?? '' }})</strong>
+
                                     <div style="width: 100%; overflow-x: auto;">
                                         <table class="table table-sm table-striped table-bordered"
                                             style="border-collapse: collapse; border-spacing: 0;">

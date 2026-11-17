@@ -99,7 +99,7 @@
                                                                     <th>Total Discount</th>
                                                                     <th>Grand Total</th>
                                                                     <th>Total Collection</th>
-                                                                    <th>Total Due</th>
+                                                                    <th>Alltime Due</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -116,7 +116,7 @@
                                                                     $totalDiscount = customerTotalSaleDiscounted($customer->id,$fromDate,$toDate);
                                                                     $totalGrandTotal = customerGrandTotalSale($customer->id,$fromDate,$toDate);
                                                                     $totalCollection = customerTotalCollection($customer->id,$fromDate,$toDate);
-                                                                    $totalDue = customerTotalDue($customer->id,$fromDate,$toDate);
+                                                                    $totalDue = paymentHistoryDue($customer->id);
 
                                                                     $grandTotal = $grandTotal + $total;
                                                                     $grandDiscount = $grandDiscount + $totalDiscount;

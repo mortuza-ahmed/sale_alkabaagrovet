@@ -16,5 +16,9 @@ class StockController extends Controller
         $stockLogs = StockLog::with('supplier','customer','purchase','sale','product')->latest()->get();
         return view('backend.pages.stock.log',compact('stockLogs'));
     }
+    public function print(){
+        $stocks = Stock::with('product.unit')->get();
+        return view('backend.pages.stock.stock-print', compact('stocks'));
+    }
 
 }

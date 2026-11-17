@@ -15,27 +15,49 @@
                                     <div class="card">
                                         <div class="card-header d-flex justify-content-between align-items-center">
                                             <h4 class="card-title m-0">Stock Lists</h4>
+                                            <a href="{{ route('stocks.print') }}" target="_blank" class="btn btn-sm btn-primary">
+                                                <i class="fas fa-print"></i> Print
+                                            </a>
                                         </div>
                                         <div class="card-body">
                                             <div style="width: 100%; overflow-x: auto;">
                                                 <table id="datatable" class="table table-sm table-striped table-bordered"
-                                                style="border-collapse: collapse; border-spacing: 0; ">
+                                                    style="border-collapse: collapse; border-spacing: 0;">
                                                     <thead>
                                                         <tr>
                                                             <th>SL</th>
                                                             <th>Product Name</th>
-                                                            <th>Quantity</th>
+                                                            <th>Product Price</th>
+                                                            <th>Available Quantity</th>
+                                                            <th>Stock Value</th>
                                                         </tr>
                                                     </thead>
+                                                    @php $totalStockValue = 0; @endphp
                                                     <tbody>
                                                         @foreach($stocks as $stock)
+                                                        @php
+                                                            $price = $stock->product?->price ?? 0;
+                                                            $value = $price * $stock->quantity;
+                                                            $totalStockValue += $value;
+                                                        @endphp
                                                         <tr>
                                                             <td>{{ $loop->iteration }}</td>
                                                             <td>{{ $stock->product?->name }} {{ $stock->product?->unit?->name }}</td>
+                                                            <td>৳ {{ number_format($price, 2) }}</td>
                                                             <td>{{ $stock->quantity }}</td>
+                                                            <td>৳ {{ number_format($value, 2) }}</td>
                                                         </tr>
                                                         @endforeach
                                                     </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th></th>
+                                                            <th></th>
+                                                            <th class="text-end">Total Stock Value</th>
+                                                            <th>৳ {{ number_format($totalStockValue, 2) }}</th>
+                                                        </tr>
+                                                    </tfoot>
                                                 </table>
                                             </div>
                                         </div>

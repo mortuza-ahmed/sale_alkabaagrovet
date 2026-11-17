@@ -95,6 +95,7 @@
                     </table>
 
                     {{-- sales table --}}
+                    <strong class="text-center">All Sales Invoice</strong>
                      <table class="table table-bordered my-2" style="border:1px solid #ADADAD">
                         <thead class="table-secondary p-0">
                             <tr class="p-0">
@@ -133,6 +134,7 @@
                     </table>
 
                     {{-- ITEMS TABLE --}}
+                    <strong class="text-center">Payment History ({{ Carbon\Carbon::parse($fromDate)->format('d M Y') ?? '' }} - {{ Carbon\Carbon::parse($toDate)->format('d M Y') ?? '' }})</strong>
                     <table class="table table-bordered my-2" style="border:1px solid #ADADAD">
                         <thead class="table-secondary p-0">
                             <tr class="p-0">
